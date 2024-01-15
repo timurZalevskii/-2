@@ -1,0 +1,183 @@
+Тема 2. Базовые SELECT ЗАПРОСЫ
+Выборка данных с SELECT
+SELECT - это основная команда SQL для выборки данных из таблицы. Пример:
+
+ИЗ *
+ВЫБРАТЬ товары;
+Этот запрос выбирает все строки из таблицы "products".
+
+ВЫБЕРИТЕ product_id, product_name, unit_price 
+Из products;
+Выборка и простая арифметика в SQL
+ВЫБЕРИТЕ product_id, product_name, unit_price * units_in_stock КАКtotal_price 
+ИЗ продукции;
+Использование DISTINCT в запросах
+DISTINCT используется для выбора уникальных значений из столбца:
+
+SELECT DISTINCT title
+FROM employees;
+SELECT DISTINCT country, title
+FROM employees;
+Использование COUNT в запросах
+COUNT используется для подсчета строк в выборке:
+
+КОЛИЧЕСТВО ВЫБОРА(*)
+ОТ сотрудников;
+КОЛИЧЕСТВО ВЫБОР(ОТДЕЛЬНАЯ страна)
+ОТ сотрудников;
+Использование WHERE в запросах
+WHERE используется для фильтрации результатов:
+
+<span>ВЫБЕРИТЕ</span> название компании, имя контакта, телефон, страну 
+<span>У</span>клиентов 
+<span>ГДЕ</span> страна <span>=</span><span>'</span><span>США</span><span>'</span>; 
+<span>ИЗ</span><span>*</span><span>ВЫБРАТЬ</span>товары 
+<span>ГДЕ</span> unit_price <span>></span><span>20</span>; 
+ 
+<span>КОЛИЧЕСТВО</span><span>ВЫБОРА</span>(<span>*</span>)
+<span>ИЗ</span>продукции 
+<span>ГДЕ</span> unit_price <span><</span><span>20</span>;  
+<span>ИЗ</span><span>*</span><span>ВЫБРАТЬ</span>товары 
+<span>ГДЕ</span> снято с производства <span>=</span><span>1</span>; 
+ 
+AND и OR
+Можно комбинировать условия с помощью операторов AND и OR:
+
+ИЗ *
+ВЫБРАТЬтовары 
+ГДЕ unit_price > 25 И units_in_stock > 40;
+ОТ *
+ИЗБРАННЫХклиентов 
+ГДЕ город = "Берлин" ИЛИ город = "Лондон" Или город = "Сан-Франциско";
+Этот запрос вернет клиентов из городов Берлин, Лондон или Сан-Франциско.
+
+BETWEEN
+BETWEEN используется для выбора значений в заданном диапазоне:
+
+SELECT *
+FROM orders
+WHERE freight BETWEEN 20 AND 40;
+IN, NOT IN
+IN и NOT IN используются для выбора значений из списка:
+
+SELECT *
+FROM customers
+WHERE country IN ('Mexico', 'Germany', 'USA', 'Canada');
+Этот запрос вернет клиентов из Мексики, Германии, США или Канады.
+
+SELECT *
+FROM products
+WHERE categoryid NOT IN (1, 3, 5, 7);
+Сортировка с ORDER BY
+ORDER BY используется для сортировки результатов:
+
+SELECT DISTINCT country
+FROM customers
+ORDER BY country;
+SELECT DISTINCT country, city
+FROM customers
+ORDER BY country DESC, city ASC;
+Вычисление минимума, максимума и среднего: MIN, MAX, AVG
+Можно вычислять минимум, максимум и среднее значение столбца:
+
+SELECT MIN(order_date)
+FROM orders
+WHERE ship_city = 'London';
+SELECT MAX(order_date)
+FROM orders
+WHERE ship_city = 'London';
+SELECT AVG(unit_price)
+FROM products
+WHERE discontinued <> 1;
+LIKE в запросах для поиска строк
+LIKE используется для поиска строк по шаблону:
+
+SELECT last_name, first_name
+FROM employees
+WHERE first_name LIKE '%n';
+SELECT last_name, first_name
+FROM employees
+WHERE last_name LIKE 'B%';
+ВЫБЕРИТЕ фамилию, отчество 
+Изсотрудников 
+ГДЕ фамилия ТИПА 'Buch%';
+SELECT last_name, first_name
+FROM employees
+WHERE last_name LIKE '_uch%';
+LIMIT
+LIMIT используется для ограничения количества возвращаемых строк:
+
+SELECT product_name, unit_price
+FROM products
+WHERE discontinued <> 1
+ORDER BY unit_price DESC
+LIMIT 10;
+Проверка на NULL: IS NULL, IS NOT NULL
+IS NULL и IS NOT NULL используются для проверки наличия или отсутствия значений NULL:
+
+SELECT ship_city, ship_region, ship_country
+FROM orders
+WHERE ship_region IS NULL;
+SELECT ship_city, ship_region, ship_country
+FROM orders
+WHERE ship_region IS NOT NULL;
+Группировка GROUP BY
+GROUP BY используется для группировки результатов:
+
+SELECT ship_country, COUNT(*)
+FROM orders
+WHERE freight > 50
+GROUP BY ship_country
+ORDER BY COUNT(*) DESC;
+ВЫБЕРИТЕ category_id, СУММУ(UnitsInStock)
+ИЗпродукции 
+СГРУППИРОВАТЬ Поcategory_id 
+ЗАКАЗЫВАТЬ По СУММЕ(units_in_stock) С
+ОГРАНИЧЕНИЕМ 5;
+Постфильтрация с HAVING
+HAVING используется для фильтрации результатов после группировки:
+
+ВЫБЕРИТЕ category_id, SUM(unit_price * units_in_stock) В КАЧЕСТВЕtotal_value 
+ИЗпродукции 
+ГДЕ снято с производства <> 1
+ГРУППА Поcategory_id 
+ИМЕЯ total_value > 5000
+ЗАКАЗЫВАЙТЕ По total_value DESC;
+Объединение, пересечение, разница в SQL - UNION, INTERSECT, EXCEPT
+UNION, INTERSECT и EXCEPT используются для объединения, пересечения и разницы результатов соответственно:
+
+ВЫБЕРИТЕстрану 
+ОТклиентов 
+ОБЪЕДИНЕНИЕ
+ВЫБЕРИТЕстрану 
+ОТсотрудников; 
+
+ВЫБЕРИТЕстрану 
+ОТклиентов 
+ПРОФСОЮЗ ВСЕ
+ВЫБЕРИТЕстрану 
+Усотрудников; 
+
+ВЫБЕРИТЕ ОТДЕЛЬНУЮстрану 
+ОТклиентов 
+ПРОФСОЮЗ
+ВЫБЕРИТЕ ОТДЕЛЬНУЮстрану 
+ОТсотрудников; 
+
+ВЫБЕРИТЕ страну 
+У клиентов
+ПЕРЕСЕКАТЬСЯ 
+ВЫБЕРИТЕстрану 
+Упоставщиков; 
+
+ВЫБЕРИТЕ страну 
+У покупателей
+КРОМЕ 
+ВЫБЕРИТЕстрану 
+Упоставщиков; 
+
+ВЫБЕРИТЕ страну 
+У покупателей
+КРОМЕ ВСЕХ 
+ВЫБЕРИТЕстрану 
+У поставщиков;
